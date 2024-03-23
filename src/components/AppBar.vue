@@ -37,6 +37,9 @@
         <v-list-item @click="$refs.exportEpubDialog.open()">
           <v-list-item-title>輸出EPUB(.epub)</v-list-item-title>
         </v-list-item>
+        <v-list-item @click="$refs.exportJSONDialog.open()">
+          <v-list-item-title>輸出JSON(.json)</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-menu>
 
@@ -50,8 +53,9 @@
     <setting-dialog ref="settingDialog"></setting-dialog>
     <images-dialog ref="imagesDialog"></images-dialog>
     <book-meta-dialog ref="bookMetaDialog"></book-meta-dialog>
-    <export-txt-dialog ref="exportTxtDialog"></export-txt-dialog>
     <export-epub-dialog ref="exportEpubDialog"></export-epub-dialog>
+    <export-txt-dialog ref="exportTxtDialog"></export-txt-dialog>
+    <export-json-dialog ref="exportJSONDialog"></export-json-dialog>
     <import-txt-dialog ref="importTxtDialog"></import-txt-dialog>
     <delete-dialog ref="deleteDialog"></delete-dialog>
     <cut-dialog ref="cutDialog"></cut-dialog>
@@ -62,8 +66,9 @@
 import SettingDialog from "./SettingDialog.vue"
 import ImagesDialog from "./ImagesDialog.vue"
 import BookMetaDialog from "./BookMetaDialog.vue"
-import ExportTxtDialog from "./ExportTxtDialog.vue"
 import ExportEpubDialog from "./ExportEpubDialog.vue"
+import ExportTxtDialog from "./ExportTxtDialog.vue"
+import ExportJsonDialog from "./ExportJsonDialog.vue"
 import ImportTxtDialog from "./ImportTxtDialog.vue"
 import DeleteDialog from "./DeleteDialog.vue"
 import CutDialog from "./CutDialog.vue"
