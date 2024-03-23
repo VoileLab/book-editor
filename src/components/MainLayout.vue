@@ -6,6 +6,7 @@
           <template #item="{ element, index }">
             <v-list-item link :title="'第' + (index + 1) + '章: ' + bookStore.currentBook.content.data[element].title"
               :active="element == bookStore.editState.currentContentID"
+              :ref="element == bookStore.editState.currentContentID ? 'selectedContentListItem' : ''"
               @click="bookStore.editState.currentContentID = element"></v-list-item>
           </template>
         </draggable>
@@ -18,8 +19,7 @@
     <v-main>
       <v-container class="h-100 w-75">
         <editarea v-if="bookStore.contentAvailable" :readonly="settingStore.view" :showLines="settingStore.showLines"
-          v-model="bookStore.currentContent.content"
-          ref="editarea"></editarea>
+          v-model="bookStore.currentContent.content" ref="editarea"></editarea>
       </v-container>
     </v-main>
   </v-layout>
@@ -66,17 +66,18 @@ export default {
       }
 
       switch (e.key) {
-      case "ArrowLeft":
-        idx -= 1
-        break
-      case "ArrowRight":
-        idx += 1
-        break
-      default:
-        return
+        case "ArrowLeft":
+          idx -= 1
+          break
+        case "ArrowRight":
+          idx += 1
+          break
+        default:
+          return
       }
 
       this.bookStore.setCurrentContentIdx(idx)
+      this.$refs.selectedContentListItem.$el.scrollIntoView()
       this.$refs.editarea.scrollTop(0)
     }
   },

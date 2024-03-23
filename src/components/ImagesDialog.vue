@@ -8,7 +8,8 @@
         <v-row>
           <v-col cols="12" md="4" v-for="element, index in bookStore.currentContent.imgs">
             <v-img :src="element" class="text-right pa-2">
-              <v-btn icon="mdi-trash-can" color="warning" @click="bookStore.currentContent.imgs.splice(index, 1)"></v-btn>
+              <v-btn icon="mdi-trash-can" color="warning"
+                @click="bookStore.currentContent.imgs.splice(index, 1)"></v-btn>
             </v-img>
           </v-col>
         </v-row>

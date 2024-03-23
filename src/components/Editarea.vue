@@ -1,7 +1,6 @@
 <template>
   <textarea spellcheck="false" class="w-100 writer" :value="modelValue" :readonly="readonly"
-    @input="$emit('update:modelValue', $event.target.value)" :class="{ lines: showLines }"
-    ref="textarea"></textarea>
+    @input="$emit('update:modelValue', $event.target.value)" :class="{ lines: showLines }" ref="textarea"></textarea>
 </template>
 
 <script>

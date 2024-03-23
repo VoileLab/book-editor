@@ -2,14 +2,16 @@
   <v-app-bar density="compact" scroll-behavior="hide">
     <v-app-bar-nav-icon @click="$emit('click-nav-icon')"></v-app-bar-nav-icon>
 
-    <input v-if="bookStore.contentAvailable" v-model="bookStore.currentContent.title" class="title" spellcheck="false" />
+    <input v-if="bookStore.contentAvailable" v-model="bookStore.currentContent.title" class="title"
+      spellcheck="false" />
 
     <v-btn v-if="bookStore.contentAvailable" icon="mdi-trash-can" @click="deleteContent"> </v-btn>
     <v-btn v-if="bookStore.contentAvailable" icon="mdi-content-cut" @click="$refs.cutDialog.open()"></v-btn>
-    <v-btn v-if="bookStore.contentAvailable" :icon="settingStore.view ? 'mdi-eye': 'mdi-pen'"
+    <v-btn v-if="bookStore.contentAvailable" :icon="settingStore.view ? 'mdi-eye' : 'mdi-pen'"
       @click="settingStore.view = !settingStore.view"></v-btn>
 
-    <v-btn v-if="bookStore.bookAvailable" icon="mdi-plus" @click="bookStore.addContent({index: bookStore.editState.currentBookIndex})"></v-btn>
+    <v-btn v-if="bookStore.bookAvailable" icon="mdi-plus"
+      @click="bookStore.addContent({ index: bookStore.editState.currentBookIndex })"></v-btn>
 
     <v-spacer></v-spacer>
 
