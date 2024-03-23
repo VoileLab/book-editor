@@ -16,6 +16,10 @@ export const useBookStore = defineStore('book', {
     }
   },
   getters: {
+    /**
+     * 
+     * @returns {Book}
+     */
     currentBook() {
       if (!this.bookAvailable) {
         return new Book()
@@ -52,6 +56,17 @@ export const useBookStore = defineStore('book', {
     deleteCurrentContent() {
       this.editState.currentContentID = this.currentBook.deleteContent(
         this.editState.currentContentID)
+    },
+
+    /**
+     * @param {number} idx 
+     */
+    setCurrentContentIdx(idx) {
+      if (idx < 0 || idx >= this.currentBook.content.idList.length) {
+        return
+      }
+
+      this.editState.currentContentID = this.currentBook.content.idList[idx]
     },
 
     addBook() {

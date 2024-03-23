@@ -6,6 +6,7 @@ export const useSettingStore = defineStore('setting', {
       showLines: true,
       showTime: true,
       showWordCount: true,
+      view: false,
     }
   },
   persist: true,
