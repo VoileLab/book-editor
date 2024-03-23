@@ -7,6 +7,8 @@
     <v-btn v-if="bookStore.contentAvailable" icon="mdi-trash-can" @click="deleteContent"> </v-btn>
     <v-btn v-if="bookStore.contentAvailable" icon="mdi-content-cut" @click="$refs.cutDialog.open()"></v-btn>
 
+    <v-btn v-if="bookStore.bookAvailable" icon="mdi-plus" @click="bookStore.addContent({index: bookStore.editState.currentBookIndex})"></v-btn>
+
     <v-spacer></v-spacer>
 
     <v-menu v-if="bookStore.bookAvailable">
