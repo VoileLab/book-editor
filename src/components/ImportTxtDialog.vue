@@ -24,6 +24,13 @@
 
 <script>
 import { useBookStore } from '@/store/book';
+import { detect } from 'jschardet'
+import iconv from 'iconv-lite'
+
+const JSCHARDET_TO_ICONV_ENCODINGS = {
+  'ibm866': 'cp866',
+  'big5': 'cp950'
+}
 
 export default {
   name: 'import-txt-dialog',
@@ -31,6 +38,7 @@ export default {
     return {
       show: false,
       text: '',
+      encoding: '',
       previewLines: [],
       fileInputKey: 0,
     }
@@ -53,10 +61,20 @@ export default {
 
       const reader = new FileReader();
       reader.addEventListener('load', (event) => {
-        this.text = event.target.result
-        this.previewLines = event.target.result.split('\n').slice(0, 200)
+        const rawContent = event.target.result
+        console.log(rawContent)
+
+        const { encoding, confidence } = detect(rawContent.toString())
+        console.log(encoding, confidence)
+
+        const iconvEncoding = JSCHARDET_TO_ICONV_ENCODINGS[encoding] || encoding
+        const content = iconv.decode(rawContent, iconvEncoding)
+
+        this.text = content
+        this.encoding = encoding
+        this.previewLines = content.split('\n').slice(0, 200)
       });
-      reader.readAsText(file);
+      reader.readAsBinaryString(file);
     },
     close() {
       this.show = false
