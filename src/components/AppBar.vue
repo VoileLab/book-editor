@@ -11,7 +11,7 @@
       @click="settingStore.view = !settingStore.view"></v-btn>
 
     <v-btn v-if="bookStore.bookAvailable" icon="mdi-plus"
-      @click="bookStore.addContent({ index: bookStore.editState.currentBookIndex })"></v-btn>
+      @click="bookStore.addContent({ index: bookStore.currentContentIdx })"></v-btn>
 
     <v-spacer></v-spacer>
 
