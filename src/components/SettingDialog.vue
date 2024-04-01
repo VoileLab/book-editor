@@ -1,5 +1,5 @@
 <template>
-  <v-dialog transition="dialog-top-transition" width="auto" v-model="show">
+  <v-dialog transition="dialog-top-transition" max-width="50%" v-model="show">
     <v-card>
       <v-toolbar color="primary" title="設定" density="compact"></v-toolbar>
       <div class="d-flex flex-row">

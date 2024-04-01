@@ -5,20 +5,46 @@
     <input v-if="bookStore.contentAvailable" v-model="bookStore.currentContent.title" class="title"
       spellcheck="false" />
 
-    <v-btn v-if="bookStore.contentAvailable" icon="mdi-trash-can" @click="deleteContent"> </v-btn>
-    <v-btn v-if="bookStore.currentContentIdx >= 1" icon="mdi-arrow-up-bold-outline" @click="deleteContentAndJoinPreviousContent"> </v-btn>
-    <v-btn v-if="bookStore.contentAvailable" icon="mdi-content-cut" @click="$refs.cutDialog.open()"></v-btn>
-    <v-btn v-if="bookStore.contentAvailable" :icon="settingStore.view ? 'mdi-eye' : 'mdi-pen'"
-      @click="settingStore.view = !settingStore.view"></v-btn>
+    <v-tooltip text="刪除目前章節" location="bottom">
+      <template v-slot:activator="{ props }">
+        <v-btn v-bind="props" v-if="bookStore.contentAvailable" icon="mdi-trash-can" @click="deleteContent" />
+      </template>
+    </v-tooltip>
 
-    <v-btn v-if="bookStore.bookAvailable" icon="mdi-plus"
-      @click="bookStore.addContent({ index: bookStore.currentContentIdx })"></v-btn>
+    <v-tooltip text="將目前章節和上章節合併" location="bottom">
+      <template v-slot:activator="{ props }">
+        <v-btn v-bind="props" v-if="bookStore.currentContentIdx >= 1" icon="mdi-arrow-up-bold-outline"
+          @click="deleteContentAndJoinPreviousContent" />
+      </template>
+    </v-tooltip>
+
+    <v-tooltip text="切割當前章節" location="bottom">
+      <template v-slot:activator="{ props }">
+        <v-btn v-bind="props" v-if="bookStore.contentAvailable" icon="mdi-content-cut"
+          @click="$refs.cutDialog.open()" />
+      </template>
+    </v-tooltip>
+
+    <v-tooltip text="切換編輯/檢視模式" location="bottom">
+      <template v-slot:activator="{ props }">
+        <v-btn v-bind="props" v-if="bookStore.contentAvailable" :icon="settingStore.view ? 'mdi-eye' : 'mdi-pen'"
+          @click="settingStore.view = !settingStore.view"></v-btn>
+      </template>
+    </v-tooltip>
+
+    <v-tooltip text="加入新章節" location="bottom">
+      <template v-slot:activator="{ props }">
+        <v-btn v-bind="props" v-if="bookStore.bookAvailable" icon="mdi-plus"
+          @click="bookStore.addContent({ index: bookStore.currentContentIdx })"></v-btn>
+      </template>
+    </v-tooltip>
+
 
     <v-spacer></v-spacer>
 
     <v-menu v-if="bookStore.bookAvailable">
       <template v-slot:activator="{ props }">
-        <v-btn icon="mdi-import" v-bind="props"> </v-btn>
+        <v-btn icon="mdi-import" v-bind="props" aria-label="匯入"> </v-btn>
       </template>
       <v-list>
         <v-list-item @click="$refs.importTxtDialog.open()">
@@ -29,7 +55,7 @@
 
     <v-menu v-if="bookStore.bookAvailable">
       <template v-slot:activator="{ props }">
-        <v-btn icon="mdi-export" v-bind="props"> </v-btn>
+        <v-btn icon="mdi-export" v-bind="props" aria-label="匯出"> </v-btn>
       </template>
       <v-list>
         <v-list-item @click="$refs.exportTxtDialog.open()">
@@ -44,9 +70,24 @@
       </v-list>
     </v-menu>
 
-    <v-btn icon="mdi-cog" @click="$refs.settingDialog.open()"> </v-btn>
-    <v-btn v-if="bookStore.bookAvailable" icon="mdi-image" @click="$refs.imagesDialog.open()"></v-btn>
-    <v-btn v-if="bookStore.bookAvailable" icon="mdi-book-settings" @click="$refs.bookMetaDialog.open()"> </v-btn>
+    <v-tooltip text="設定" location="bottom">
+      <template v-slot:activator="{ props }">
+        <v-btn v-bind="props" icon="mdi-cog" @click="$refs.settingDialog.open()"> </v-btn>
+      </template>
+    </v-tooltip>
+
+    <v-tooltip text="插圖" location="bottom">
+      <template v-slot:activator="{ props }">
+        <v-btn v-bind="props" v-if="bookStore.bookAvailable" icon="mdi-image" @click="$refs.imagesDialog.open()" />
+      </template>
+    </v-tooltip>
+
+    <v-tooltip text="書籍資料" location="bottom">
+      <template v-slot:activator="{ props }">
+        <v-btn v-bind="props" v-if="bookStore.bookAvailable" icon="mdi-book-settings"
+          @click="$refs.bookMetaDialog.open()" />
+      </template>
+    </v-tooltip>
 
     <v-chip v-if="settingStore.showWordCount && bookStore.contentAvailable" variant="text">字數: {{ wordCount }}</v-chip>
     <v-chip v-if="settingStore.showTime" variant="text"> {{ timeStr }} </v-chip>

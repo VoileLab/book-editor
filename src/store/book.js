@@ -17,7 +17,6 @@ export const useBookStore = defineStore('book', {
   },
   getters: {
     /**
-     * 
      * @returns {Book}
      */
     currentBook() {
@@ -26,12 +25,18 @@ export const useBookStore = defineStore('book', {
       }
       return this.books[this.editState.currentBookIndex]
     },
+    /**
+     * @returns {Content}
+     */
     currentContent() {
       if (!this.contentAvailable) {
         return new Content('', '')
       }
       return this.currentBook.getContentByID(this.editState.currentContentID)
     },
+    /**
+     * @returns {number}
+     */
     currentContentIdx() {
       if (!this.contentAvailable) {
         return -1
@@ -73,6 +78,9 @@ export const useBookStore = defineStore('book', {
       this.books.push(new Book())
     },
 
+    /**
+     * @param {number} bookIndex 
+     */
     selectBook(bookIndex) {
       this.editState.currentBookIndex = bookIndex
       if (this.currentBook.content.idList.length > 0) {
@@ -82,6 +90,9 @@ export const useBookStore = defineStore('book', {
       }
     },
 
+    /**
+     * @param {number} bookIndex 
+     */
     deleteBook(bookIndex) {
       this.books.splice(bookIndex, 1)
       if (this.editState.currentBookIndex >= this.books.length) {
