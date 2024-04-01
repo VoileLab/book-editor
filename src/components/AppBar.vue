@@ -6,6 +6,7 @@
       spellcheck="false" />
 
     <v-btn v-if="bookStore.contentAvailable" icon="mdi-trash-can" @click="deleteContent"> </v-btn>
+    <v-btn v-if="bookStore.currentContentIdx >= 1" icon="mdi-arrow-up-bold-outline" @click="deleteContentAndJoinPreviousContent"> </v-btn>
     <v-btn v-if="bookStore.contentAvailable" icon="mdi-content-cut" @click="$refs.cutDialog.open()"></v-btn>
     <v-btn v-if="bookStore.contentAvailable" :icon="settingStore.view ? 'mdi-eye' : 'mdi-pen'"
       @click="settingStore.view = !settingStore.view"></v-btn>
@@ -119,6 +120,17 @@ export default {
     async deleteContent() {
       const res = await this.$refs.deleteDialog.open(this.bookStore.currentContent.title)
       if (res) {
+        this.bookStore.deleteCurrentContent()
+      }
+    },
+    async deleteContentAndJoinPreviousContent() {
+      const res = await this.$refs.deleteDialog.open(this.bookStore.currentContent.title)
+      if (res) {
+        const currIdx = this.bookStore.currentContentIdx
+        const prevIdx = currIdx - 1
+        const currContent = this.bookStore.currentContent
+
+        this.bookStore.currentBook.getContentByIndex(prevIdx).content += '\n' + currContent.title + '\n' + currContent.content
         this.bookStore.deleteCurrentContent()
       }
     }
