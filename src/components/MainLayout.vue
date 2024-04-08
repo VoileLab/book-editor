@@ -14,6 +14,17 @@
       </v-list>
     </v-navigation-drawer>
 
+    <v-navigation-drawer v-model="uiStore.show_find_and_replace">
+      <v-card class="mx-auto" color="grey-lighten-3">
+        <v-card-text>
+          <v-text-field label="尋找文字" variant="outlined" append-inner-icon="mdi-magnify" density="compact"
+            @click:append-inner="alert(1)" />
+          <v-text-field label="取代文字" variant="outlined" append-inner-icon="mdi-find-replace" density="compact"
+            @click:append-inner="alert(1)" />
+        </v-card-text>
+      </v-card>
+    </v-navigation-drawer>
+
     <app-bar @click-nav-icon="drawer = !drawer"></app-bar>
 
     <v-main>
@@ -32,6 +43,7 @@ import Editarea from "./Editarea.vue"
 
 import { useSettingStore } from "@/store/setting"
 import { useBookStore } from "@/store/book"
+import { useUIStore } from '@/store/ui'
 
 import draggable from 'vuedraggable'
 
@@ -87,6 +99,9 @@ export default {
     },
     settingStore() {
       return useSettingStore()
+    },
+    uiStore() {
+      return useUIStore()
     },
   },
 }

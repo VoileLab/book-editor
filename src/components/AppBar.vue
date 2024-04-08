@@ -2,6 +2,13 @@
   <v-app-bar density="compact" scroll-behavior="hide">
     <v-app-bar-nav-icon @click="$emit('click-nav-icon')"></v-app-bar-nav-icon>
 
+    <v-tooltip text="尋找取代" location="bottom">
+      <template v-slot:activator="{ props }">
+        <v-btn v-bind="props" v-if="bookStore.bookAvailable" icon="mdi-find-replace"
+          @click="uiStore.show_find_and_replace = !uiStore.show_find_and_replace"></v-btn>
+      </template>
+    </v-tooltip>
+
     <input v-if="bookStore.contentAvailable" v-model="bookStore.currentContent.title" class="title"
       spellcheck="false" />
 
@@ -117,6 +124,7 @@ import CutDialog from "./CutDialog.vue"
 
 import { useBookStore } from "@/store/book"
 import { useSettingStore } from "@/store/setting"
+import { useUIStore } from "@/store/ui"
 
 export default {
   name: 'app-bar',
@@ -137,6 +145,9 @@ export default {
     },
     settingStore() {
       return useSettingStore()
+    },
+    uiStore() {
+      return useUIStore()
     },
     wordCount() {
       if (!this.bookStore.currentContent) {
