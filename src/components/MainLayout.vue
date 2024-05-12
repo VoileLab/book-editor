@@ -14,15 +14,14 @@
       </v-list>
     </v-navigation-drawer>
 
-    <find-drawer v-model="uiStore.show_find_and_replace" />
+    <find-drawer v-model="uiStore.showFindAndReplace" />
 
     <app-bar @click-nav-icon="drawer = !drawer"></app-bar>
 
     <v-main>
       <v-container class="h-100 w-75">
         <editarea v-if="bookStore.contentAvailable" :readonly="settingStore.view" :showLines="settingStore.showLines"
-          :select="uiStore.select"
-          v-model="bookStore.currentContent.content" ref="editarea"></editarea>
+          :select="uiStore.select" v-model="bookStore.currentContent.content" ref="editarea"></editarea>
       </v-container>
     </v-main>
   </v-layout>

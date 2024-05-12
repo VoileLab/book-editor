@@ -5,7 +5,7 @@
     <v-tooltip text="尋找取代" location="bottom">
       <template v-slot:activator="{ props }">
         <v-btn v-bind="props" v-if="bookStore.bookAvailable" icon="mdi-find-replace"
-          @click="uiStore.show_find_and_replace = !uiStore.show_find_and_replace"></v-btn>
+          @click="uiStore.showFindAndReplace = !uiStore.showFindAndReplace"></v-btn>
       </template>
     </v-tooltip>
 
