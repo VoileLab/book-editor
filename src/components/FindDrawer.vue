@@ -4,12 +4,15 @@
       <v-card-text>
         <v-text-field label="尋找文字" variant="outlined" append-inner-icon="mdi-magnify" density="compact"
           v-model="findText" @click:append-inner="find" />
+        <v-text-field label="取代文字" variant="outlined" append-inner-icon="mdi-find-replace" density="compact"
+          v-model="replaceText" @click:append-inner="replaceAll" />
         <v-list v-if="results.length">
           <v-virtual-scroll :height="300" :items="results">
             <template v-slot:default="{ item, index }">
               <v-list-item :key="index" :title="bookStore.currentBook.getContentByID(item.id).title"
                 append-icon="mdi-close" :subtitle="item.line" @click="select(index)">
                 <template v-slot:append>
+                  <v-btn color="grey-lighten-1" icon="mdi-find-replace" variant="text" @click="replace(index)"></v-btn>
                   <v-btn color="grey-lighten-1" icon="mdi-close" variant="text"
                     @click="results.splice(index, 1)"></v-btn>
                 </template>
@@ -42,6 +45,7 @@ export default {
   data: () => {
     return {
       findText: '',
+      replaceText: '',
       results: [],
     }
   },
@@ -82,6 +86,24 @@ export default {
         end: result.end,
       }
     },
+    replaceAll() {
+      const currentBook = this.bookStore.currentBook
+      for (const contentID of currentBook.content.idList) {
+        let content = currentBook.content.data[contentID]
+
+        content.content = content.content.replace(this.findText, this.replaceText)
+      }
+    },
+    replace(idx) {
+      const result = this.results[idx]
+
+      let content = this.bookStore.currentBook.getContentByID(result.id)
+      let data = content.content
+
+      content.content = data.substring(0, result.start) + this.replaceText + data.substring(result.end)
+
+      this.results.splice(idx, 1)
+    }
   },
 }
 </script>
