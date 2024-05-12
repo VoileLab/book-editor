@@ -14,12 +14,14 @@
       </v-list>
     </v-navigation-drawer>
 
+    <find-drawer v-model="uiStore.showFindAndReplace" />
+
     <app-bar @click-nav-icon="drawer = !drawer"></app-bar>
 
     <v-main>
       <v-container class="h-100 w-75">
         <editarea v-if="bookStore.contentAvailable" :readonly="settingStore.view" :showLines="settingStore.showLines"
-          v-model="bookStore.currentContent.content" ref="editarea"></editarea>
+          :select="uiStore.select" v-model="bookStore.currentContent.content" ref="editarea"></editarea>
       </v-container>
     </v-main>
   </v-layout>
@@ -27,11 +29,12 @@
 
 <script>
 import AppBar from "./AppBar.vue"
-
 import Editarea from "./Editarea.vue"
+import FindDrawer from "./FindDrawer.vue"
 
 import { useSettingStore } from "@/store/setting"
 import { useBookStore } from "@/store/book"
+import { useUIStore } from '@/store/ui'
 
 import draggable from 'vuedraggable'
 
@@ -87,6 +90,9 @@ export default {
     },
     settingStore() {
       return useSettingStore()
+    },
+    uiStore() {
+      return useUIStore()
     },
   },
 }
