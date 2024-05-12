@@ -13,7 +13,7 @@ export class Content {
 
   restoreFromDict(o) {
     this.title = o.title
-    this.content = o.content
+    this.content = o.content.replace(/\r\n/g, '\n')
     this.imgs = o.imgs || []
   }
 }

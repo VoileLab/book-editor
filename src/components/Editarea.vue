@@ -4,6 +4,31 @@
 </template>
 
 <script>
+function scrollTo(textarea, offset) {
+  const txt = textarea.value;
+  if (offset >= txt.length || offset < 0) {
+    return;
+  }
+
+  // Important, so that scrollHeight will be adjusted
+  textarea.scrollTop = 0;
+
+  textarea.value = txt.substring(0, offset)
+  let height = textarea.scrollHeight
+  textarea.value = txt
+
+  const textareaHeight = textarea.clientHeight;
+
+  if (height > textareaHeight) {
+    // scroll selection to center of textarea
+    height -= textareaHeight / 2;
+  } else {
+    height = 0;
+  }
+
+  textarea.scrollTop = height
+}
+
 export default {
   name: 'editarea',
   props: {
@@ -18,6 +43,27 @@ export default {
       type: Boolean,
       default: false,
     },
+    select: {
+      type: [Object, null],
+      default: null,
+    },
+  },
+  watch: {
+    select: function (newVal, oldVal) {
+      let start = newVal.start
+      let end = newVal.end
+      if (start == null || end == null) {
+        return
+      }
+
+      let textarea = this.$refs.textarea
+
+      scrollTo(textarea, start)
+
+      textarea.setSelectionRange(start, end)
+      textarea.blur()
+      textarea.focus()
+    }
   },
   emits: ['update:modelValue'],
   methods: {

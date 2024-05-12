@@ -21,6 +21,7 @@
     <v-main>
       <v-container class="h-100 w-75">
         <editarea v-if="bookStore.contentAvailable" :readonly="settingStore.view" :showLines="settingStore.showLines"
+          :select="uiStore.select"
           v-model="bookStore.currentContent.content" ref="editarea"></editarea>
       </v-container>
     </v-main>
