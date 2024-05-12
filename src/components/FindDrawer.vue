@@ -5,9 +5,13 @@
         <v-text-field label="尋找文字" variant="outlined" append-inner-icon="mdi-magnify" density="compact"
           v-model="findText" @click:append-inner="find" />
         <v-list v-if="results.length">
-          <v-list-item v-for="(result, idx) in results" :key="idx"
-            :title="bookStore.currentBook.getContentByID(result.id).title" :subtitle="result.line"
-            @click="select(idx)"></v-list-item>
+          <v-virtual-scroll :height="300" :items="results">
+            <template v-slot:default="{ item, index }">
+              <v-list-item :key="index" :title="bookStore.currentBook.getContentByID(item.id).title"
+                :subtitle="item.line" @click="select(index)">
+              </v-list-item>
+            </template>
+          </v-virtual-scroll>
         </v-list>
         <p v-else>
           No result.
@@ -42,6 +46,7 @@ export default {
       const searchStrLen = this.findText.length
 
       if (searchStrLen == 0) {
+        this.results = []
         return
       }
 
