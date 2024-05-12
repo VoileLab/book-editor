@@ -8,7 +8,11 @@
           <v-virtual-scroll :height="300" :items="results">
             <template v-slot:default="{ item, index }">
               <v-list-item :key="index" :title="bookStore.currentBook.getContentByID(item.id).title"
-                :subtitle="item.line" @click="select(index)">
+                append-icon="mdi-close" :subtitle="item.line" @click="select(index)">
+                <template v-slot:append>
+                  <v-btn color="grey-lighten-1" icon="mdi-close" variant="text"
+                    @click="results.splice(index, 1)"></v-btn>
+                </template>
               </v-list-item>
             </template>
           </v-virtual-scroll>
