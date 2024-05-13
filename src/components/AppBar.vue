@@ -1,14 +1,5 @@
 <template>
   <v-app-bar density="compact" scroll-behavior="hide">
-    <v-app-bar-nav-icon @click="$emit('click-nav-icon')"></v-app-bar-nav-icon>
-
-    <v-tooltip text="尋找取代" location="bottom">
-      <template v-slot:activator="{ props }">
-        <v-btn v-bind="props" v-if="bookStore.bookAvailable" icon="mdi-find-replace"
-          @click="uiStore.showFindAndReplace = !uiStore.showFindAndReplace"></v-btn>
-      </template>
-    </v-tooltip>
-
     <input v-if="bookStore.contentAvailable" v-model="bookStore.currentContent.title" class="title"
       spellcheck="false" />
 
@@ -196,5 +187,6 @@ input.title {
   outline: none;
   font-size: x-large;
   padding: 2px 2px;
+  padding-left: 20px;
 }
 </style>

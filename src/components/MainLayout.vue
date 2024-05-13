@@ -1,5 +1,11 @@
 <template>
   <v-layout class="h-100">
+    <v-navigation-drawer permanent rail>
+      <v-list density="compact" nav>
+        <v-list-item prepend-icon="mdi-view-dashboard" @click="drawer = !drawer"></v-list-item>
+        <v-list-item prepend-icon="mdi-find-replace" @click="showFindAndReplace = !showFindAndReplace"></v-list-item>
+      </v-list>
+    </v-navigation-drawer>
     <v-navigation-drawer v-model="drawer">
       <v-list v-if="bookStore.bookAvailable">
         <draggable v-model="bookStore.currentBook.content.idList" item-key="x => x">
@@ -14,9 +20,9 @@
       </v-list>
     </v-navigation-drawer>
 
-    <find-drawer v-model="uiStore.showFindAndReplace" />
+    <find-drawer v-model="showFindAndReplace" />
 
-    <app-bar @click-nav-icon="drawer = !drawer"></app-bar>
+    <app-bar></app-bar>
 
     <v-main>
       <v-container class="h-100 w-75">
@@ -46,6 +52,7 @@ export default {
   data: () => {
     return {
       drawer: null,
+      showFindAndReplace: false,
     }
   },
   mounted() {
@@ -97,11 +104,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-input.title {
-  outline: none;
-  font-size: x-large;
-  padding: 2px 2px;
-}
-</style>
