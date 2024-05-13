@@ -2,24 +2,12 @@
   <v-layout class="h-100">
     <v-navigation-drawer permanent rail>
       <v-list density="compact" nav>
-        <v-list-item prepend-icon="mdi-view-dashboard" @click="drawer = !drawer"></v-list-item>
+        <v-list-item prepend-icon="mdi-view-dashboard" @click="showContentList = !showContentList"></v-list-item>
         <v-list-item prepend-icon="mdi-find-replace" @click="showFindAndReplace = !showFindAndReplace"></v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-navigation-drawer v-model="drawer">
-      <v-list v-if="bookStore.bookAvailable">
-        <draggable v-model="bookStore.currentBook.content.idList" item-key="x => x">
-          <template #item="{ element, index }">
-            <v-list-item link :title="'第' + (index + 1) + '章: ' + bookStore.currentBook.content.data[element].title"
-              :active="element == bookStore.editState.currentContentID"
-              :ref="element == bookStore.editState.currentContentID ? 'selectedContentListItem' : ''"
-              @click="bookStore.editState.currentContentID = element"></v-list-item>
-          </template>
-        </draggable>
-        <v-list-item link prepend-icon="mdi-plus" title="加新章節" @click="bookStore.addContent"></v-list-item>
-      </v-list>
-    </v-navigation-drawer>
 
+    <content-list-drawer v-model="showContentList" />
     <find-drawer v-model="showFindAndReplace" />
 
     <app-bar></app-bar>
@@ -37,21 +25,19 @@
 import AppBar from "./AppBar.vue"
 import Editarea from "./Editarea.vue"
 import FindDrawer from "./FindDrawer.vue"
+import ContentListDrawer from "./ContentListDrawer.vue"
 
 import { useSettingStore } from "@/store/setting"
 import { useBookStore } from "@/store/book"
 import { useUIStore } from '@/store/ui'
 
-import draggable from 'vuedraggable'
-
 export default {
   components: {
-    draggable,
     Editarea,
   },
   data: () => {
     return {
-      drawer: null,
+      showContentList: true,
       showFindAndReplace: false,
     }
   },
